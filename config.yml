@@ -1,0 +1,7 @@
+steam:
+  auth:
+    username: anonymous
+  validate: false
+
+collection:
+  id: 3044264542
