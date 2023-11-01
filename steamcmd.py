@@ -1,5 +1,4 @@
 import os
-import requests
 import subprocess
 
 class SteamCmdException(Exception):
@@ -15,7 +14,7 @@ class SteamCmd(object):
 
         self.steamcmd_exe = os.path.join(self.install_path, executable)
 
-    def install_workshop_collection(self, gameid, workshop_collection_id, game_install_dir, user='anonymous', validate=False):
+    def install_workshop_items(self, gameid: int, workshop_item_ids: list[int], game_install_dir: str, user='anonymous', validate=False):
         if validate:
             validate = 'validate'
         else:
@@ -27,12 +26,8 @@ class SteamCmd(object):
             '+login {}'.format(user),         
         ]
 
-        collection_response = requests.post('https://api.steampowered.com/ISteamRemoteStorage/GetCollectionDetails/v1/', data='collectioncount=1&publishedfileids%5B0%5D={}'.format(workshop_collection_id), headers={ 'content-type': 'application/x-www-form-urlencoded' }).json()
-
-        workshop_item_ids = []
-        for item in collection_response['response']['collectiondetails'][0]['children']:
-            params.append('+workshop_download_item {} {}'.format(gameid, item['publishedfileid']))
-            workshop_item_ids.append(item['publishedfileid'])
+        for id in workshop_item_ids:
+            params.append('+workshop_download_item {} {}'.format(gameid, id))
 
         if validate != None:
             params.append('{}'.format(validate))
@@ -40,15 +35,6 @@ class SteamCmd(object):
         params.append('+quit')
 
         try:
-            subprocess.check_call(params)
+            return subprocess.check_call(params)
         except subprocess.CalledProcessError:
             raise SteamCmdException('Steamcmd was unable to run')
-        
-        for id in workshop_item_ids:
-            real_path = os.path.join(game_install_dir, 'steamapps', 'workshop', 'content', str(gameid), str(id))
-            link_path = os.path.join(game_install_dir, '@{}'.format(id))
-
-            if not os.path.islink(link_path):
-                os.symlink(real_path, link_path, True)
-
-        return 0

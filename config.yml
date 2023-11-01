@@ -5,9 +5,13 @@ steam:
     username: anonymous
   validate: false
 
+lgsm:
+  path: /home/kevin/lgsm
+  instance_name: arma3server
+
 arma3:
   server:
-    path: /home/user/arma3server
+    path: /home/kevin/arma3server
   mods:
     collection:
       id: 3068939990
