@@ -1,7 +1,12 @@
 steam:
+  path: /home/user/steamcmd 
   auth:
     username: anonymous
   validate: false
 
-collection:
-  id: 3044264542
+arma3:
+  server:
+    path: /home/user/arma3server
+  mods:
+    collection:
+      id: 3044264542
