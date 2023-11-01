@@ -1,5 +1,6 @@
 steam:
-  path: /home/user/steamcmd 
+  path: /usr/games
+  executable: steamcmd
   auth:
     username: anonymous
   validate: false
@@ -9,4 +10,4 @@ arma3:
     path: /home/user/arma3server
   mods:
     collection:
-      id: 3044264542
+      id: 3068939990
