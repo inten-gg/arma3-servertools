@@ -13,5 +13,7 @@ arma3:
   server:
     path: /home/kevin/arma3server
   mods:
+    extra_keys: []
+    #  - jsrs.bikey
     collection:
       id: 3068939990
