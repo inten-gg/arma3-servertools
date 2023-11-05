@@ -2,7 +2,7 @@ import os
 import yaml
 from steamcmd import SteamCmd
 from steamworkshop import SteamWorkshop
-from tools import symlink_mods, update_keys
+from tools import symlink_mods, update_keys, lowercase_modfiles
 from lgsm import LgsmArmA
 
 game_id = 107410
@@ -20,5 +20,7 @@ symlink_mods(game_id, mod_ids, config['arma3']['server']['path'])
 
 lgsm_arma = LgsmArmA(config['lgsm']['path'])
 lgsm_arma.update_mods(config['lgsm']['instance_name'], mod_ids)
+
+lowercase_modfiles(config['arma3']['server']['path'])
 
 update_keys(config['arma3']['server']['path'], config['arma3']['server']['path'], os.path.join(config['arma3']['server']['path'], 'keys'), mod_ids, config['arma3']['mods']['extra_keys'])

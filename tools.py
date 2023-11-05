@@ -31,3 +31,8 @@ def update_keys(basedir: str, moddir: str, keydir: str, mod_ids: list[int], extr
         if (item not in existing_keys and item not in vanilla_keys):
             shutil.copyfile(os.path.join(moddir, mods[item]["folder_name"], "keys", item), os.path.join(basedir, "keys", item))
             print(f'added {item} to server-keys')
+
+def lowercase_modfiles(moddir: str):
+    for item in glob.glob(f'{moddir}/*/addons/*.pbo'):
+        if item.isupper():
+            os.rename(item, os.path.join(os.path.dirname(item), os.path.basename(item).lower()))
